@@ -27,7 +27,8 @@ public class Index {
 	}
 	
 	public void remove (String fileName) throws IOException {
-	//	list.get(fileName).delete(); 
+        File toDelete = new File("./objects/" + list.get(fileName));
+        toDelete.delete();
 		list.remove(fileName);
 		FileWriter fw = new FileWriter("index");
 		for (String name : list.keySet()) {

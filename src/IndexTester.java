@@ -12,6 +12,9 @@ public class IndexTester {
 //		it.remove("test.txt");
 //		it.remove("snorgle.txt");
 		it.remove("slunch.txt");
+		it.remove("snorgle.txt");
+		it.remove("test.txt");
+		
 	}
 
 }
