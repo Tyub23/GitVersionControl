@@ -21,10 +21,19 @@ public class Index {
 	public void add (String fileName) throws IOException {
 		Blob b = new Blob(fileName);
 		list.put(fileName, b.getBlobHash());
-		FileWriter fw = new FileWriter("index");
-		fw.write(fileName + " : " + b.getBlobHash());
+		FileWriter fw = new FileWriter("index", true);
+		fw.write(fileName + " : " + b.getBlobHash() + "\n");
 		fw.close();
 	}
 	
-	
+	public void remove (String fileName) throws IOException {
+	//	list.get(fileName).delete(); 
+		list.remove(fileName);
+		FileWriter fw = new FileWriter("index");
+		for (String name : list.keySet()) {
+			fw.write(name + " : " + list.get(name) + "\n");
+		}
+		fw.close();
+		
+	}
 }
