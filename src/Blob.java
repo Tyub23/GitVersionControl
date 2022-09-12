@@ -13,7 +13,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class Blob {
-	private String blobHash;
+	private String blobHash = "";
 	
 	public Blob (String fileName) throws IOException {
 		
@@ -33,17 +33,6 @@ public class Blob {
 	        }
 		
 	}
-	
-	/*
-	 * save fileto disk: Path filePathToWrite = Paths.get(./objects?);
-	 * try {
-	 *   Files.writeString(path, stringToWrite, StandardCharset), 
-	 *   } catch (IOException exception) {
-	 *          System.out.println
-	 *   }
-	 */
-	
-	
 	
 	
 	public static String generateHash (String input) {
