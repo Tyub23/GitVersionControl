@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
 
@@ -20,5 +21,10 @@ public class Index {
 	public void add (String fileName) throws IOException {
 		Blob b = new Blob(fileName);
 		list.put(fileName, b.getBlobHash());
+		FileWriter fw = new FileWriter("index");
+		fw.write(fileName + " : " + b.getBlobHash());
+		fw.close();
 	}
+	
+	
 }
