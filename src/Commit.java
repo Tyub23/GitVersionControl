@@ -18,6 +18,7 @@ public class Commit {
 	private Commit parent;
 	private Commit child; 
 	//i formally apologize for the code you're about to see
+	//i have no idea if it works 
 	
 	public Commit (String summary, String author, String pTree, Commit parent) {
 	
