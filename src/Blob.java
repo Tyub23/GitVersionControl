@@ -16,7 +16,7 @@ public class Blob {
 	private String blobHash = "";
 	
 	public Blob (String fileName) throws IOException {
-		
+		 
 		
 		Path path = Path.of(fileName);
 		String ogContents = Files.readString(path);

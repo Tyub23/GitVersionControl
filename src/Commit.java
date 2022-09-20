@@ -28,10 +28,14 @@ public class Commit {
 		}
 		if (parent != null) {
 			this.parent = parent;
+			parent.setChild(this);
+		}
+		if (child != null) {
+			child.setParent(this);
 		}
 		date = getDate();
-		child.setParent(this);
-		parent.setChild(this);
+		//child.setParent(this);
+	//	parent.setChild(this);
 		
 		
 	}
@@ -82,20 +86,20 @@ public class Commit {
 	public void writesFile() throws IOException {
 		String parentPointer; 
 		String childPointer;
-		if (parent.getpTree() == null) {
+		if (parent == null || parent.getpTree() == null) {
 			parentPointer = ""; 
 		} else {
 			parentPointer = parent.getpTree();
 		}
 		
-		if (child.getpTree() == null) {
+		if (child == null || child.getpTree() == null) {
 			childPointer = ""; 
 		} else {
 			childPointer = child.getpTree();
 		}
 		
 		String hashedContents = hashify(summary + date + author + parentPointer); 
-		hashedContents = hashify(summary + date + author + parent.getpTree());
+		//hashedContents = hashify(summary + date + author + parent.getpTree());
 		File f = new File("./objects/" + hashedContents);
 		FileWriter fw = new FileWriter(f); 
 		
