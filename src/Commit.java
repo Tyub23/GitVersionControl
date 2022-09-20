@@ -1,4 +1,6 @@
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -13,17 +15,33 @@ public class Commit {
 	private String author; 
 	private String date; 
 	private String pTree; 
+	private Commit parent;
+	private Commit child; 
 	//i formally apologize for the code you're about to see
 	
 	public Commit (String summary, String author, String pTree, Commit parent) {
-		pTree = null;
+	
 		this.summary  = summary; 
 		this.author = author; 
-		this.pTree= pTree;
+		if (pTree != null) {
+			this.pTree = pTree;
+		}
+		if (parent != null) {
+			this.parent = parent;
+		}
 		date = getDate();
+		child.setParent(this);
+		parent.setChild(this);
 		
-		parent = null; 
 		
+	}
+	
+	public void setParent(Commit p) {
+		parent = p; 
+	}
+	
+	public void setChild(Commit c) {
+		child = c; 
 	}
 	
 	public String getpTree() {
@@ -61,9 +79,27 @@ public class Commit {
 	        }
 	}
 	
-	public void writesFile() {
-		File f = new File("./objects/");
+	public void writesFile() throws IOException {
+		String parentPointer; 
+		String childPointer;
+		if (parent.getpTree() == null) {
+			parentPointer = ""; 
+		} else {
+			parentPointer = parent.getpTree();
+		}
 		
+		if (child.getpTree() == null) {
+			childPointer = ""; 
+		} else {
+			childPointer = child.getpTree();
+		}
 		
+		String hashedContents = hashify(summary + date + author + parentPointer); 
+		hashedContents = hashify(summary + date + author + parent.getpTree());
+		File f = new File("./objects/" + hashedContents);
+		FileWriter fw = new FileWriter(f); 
+		
+		fw.write(pTree + "\n" + parentPointer + "\n" + childPointer + "\n" + author + "\n" + date + "\n" + summary);
+		fw.close();
 	}
 }
