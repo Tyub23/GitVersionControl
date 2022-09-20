@@ -17,8 +17,7 @@ public class Commit {
 	private String pTree; 
 	private Commit parent;
 	private Commit child; 
-	//i formally apologize for the code you're about to see
-	//i have no idea if it works 
+	//i hope it works
 	
 	public Commit (String summary, String author, String pTree, Commit parent) {
 	
@@ -34,10 +33,7 @@ public class Commit {
 		if (child != null) {
 			child.setParent(this);
 		}
-		date = getDate();
-		//child.setParent(this);
-	//	parent.setChild(this);
-		
+		date = getDate();	
 		
 	}
 	
