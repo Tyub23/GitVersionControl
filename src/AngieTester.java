@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 class AngieTester {
-
+ 
 	@BeforeAll
 	static void setUpBeforeClass() throws Exception {
 		 Path p = Paths.get("test.txt");
@@ -22,7 +22,7 @@ class AngieTester {
 	            // TODO Auto-generated catch block
 	            e.printStackTrace();
 	        }
-	}
+	} 
 
 	@AfterAll
 	static void tearDownAfterClass() throws Exception {

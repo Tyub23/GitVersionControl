@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class Tree {
 	public Tree (ArrayList<String> list) throws NoSuchAlgorithmException, IOException
-	{
+	{  
 		String holder = "";
 		for (int index = 0; index < list.size()-1; index++)
 		{
