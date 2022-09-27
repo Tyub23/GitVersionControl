@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 
 public class IndexTester {
@@ -11,9 +12,11 @@ public class IndexTester {
 		it.add("snorgle.txt");
 //		it.remove("test.txt");
 //		it.remove("snorgle.txt");
-		it.remove("slunch.txt");
-		it.remove("snorgle.txt");
-		it.remove("test.txt");
+//		it.remove("slunch.txt");
+		File index=new File("index");
+		index.delete();
+		index.createNewFile();
+		
 		
 	}
 

@@ -17,6 +17,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class Tree {
+	private String shaCode;
 	public Tree (ArrayList<String> list) throws NoSuchAlgorithmException, IOException
 	{  
 		String holder = "";
@@ -26,7 +27,7 @@ public class Tree {
 		}
 		holder += list.get(list.size()-1);
 		
-		String shaCode = "";
+		shaCode = "";
 		try {
 	           
             MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -59,6 +60,10 @@ public class Tree {
         }
         writer.close();
 		
+	}
+	public String getSha()
+	{
+		return shaCode;
 	}
     public static void main (String [] args) throws NoSuchAlgorithmException, IOException
     {

@@ -1,4 +1,6 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -8,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;  
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date; 
 
 public class Commit {
@@ -17,15 +20,36 @@ public class Commit {
 	private String pTree; 
 	private Commit parent;
 	private Commit child; 
+	private Tree tree;
 	//i hope it works
 	
-	public Commit (String summary, String author, String pTree, Commit parent) {
+	public Commit (String summary, String author, Commit parent) throws NoSuchAlgorithmException, IOException {
 	
 		this.summary  = summary; 
 		this.author = author; 
-		if (pTree != null) {
-			this.pTree = pTree;
+		ArrayList<String> list=new ArrayList<String>();
+		BufferedReader br=new BufferedReader(new FileReader("index"));
+		String name;
+		while (br.ready())
+			{
+			String s=br.readLine();
+			int j=s.indexOf(' ');
+			name=s.substring(0,j);
+			String sha=s.substring (j+3);
+			list.add("blob : "+sha+" "+name);
+			}
+		br.close();
+		if (parent!= null)
+		{
+			String pSha=parent.getTree().getSha();
+			list.add("tree : "+pSha);
 		}
+		
+		tree=new Tree(list);
+		File index=new File("index");
+		index.delete();
+		index.createNewFile();
+		
 		if (parent != null) {
 			this.parent = parent;
 			parent.setChild(this);
@@ -55,6 +79,10 @@ public class Commit {
 		date = formatter.format(d); 
 		
 		return date; 
+	}
+	public Tree getTree()
+	{
+		return tree;
 	}
 	
 	public String hashify (String input) {
@@ -100,7 +128,7 @@ public class Commit {
 		File f = new File("./objects/" + hashedContents);
 		FileWriter fw = new FileWriter(f); 
 		
-		fw.write(pTree + "\n" + parentPointer + "\n" + childPointer + "\n" + author + "\n" + date + "\n" + summary);
+		fw.write(tree + "\n" + parentPointer + "\n" + childPointer + "\n" + author + "\n" + date + "\n" + summary);
 		fw.close();
 	}
 }
