@@ -9,13 +9,11 @@ public class IndexTester {
 		it.initialize();
 		it.add("test.txt");
 		it.add("slunch.txt");
-		it.add("snorgle.txt");
-//		it.remove("test.txt");
+		
+		it.remove("test.txt");
 //		it.remove("snorgle.txt");
-//		it.remove("slunch.txt");
-		File index=new File("index");
-		index.delete();
-		index.createNewFile();
+	it.remove("slunch.txt");
+		
 		
 		
 	}

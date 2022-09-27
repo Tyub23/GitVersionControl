@@ -125,7 +125,7 @@ public class Commit {
 		
 		String hashedContents = hashify(summary + date + author + parentPointer); 
 		//hashedContents = hashify(summary + date + author + parent.getpTree());
-		File f = new File("./objects/" + hashedContents);
+		File f = new File("objects/" + hashedContents);
 		FileWriter fw = new FileWriter(f); 
 		
 		fw.write(tree + "\n" + parentPointer + "\n" + childPointer + "\n" + author + "\n" + date + "\n" + summary);
