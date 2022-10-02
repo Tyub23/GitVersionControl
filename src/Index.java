@@ -1,11 +1,15 @@
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Index {
 	private HashMap <String, String> list = new HashMap <String, String>();
-	//initialize a project which creates an empty file named index and a direcotry named objects
+	private ArrayList<String> deletedList=new ArrayList<String>();
+	private ArrayList<String> editedList=new ArrayList<String>();
+
+	//initialize a project which creates an empty file named index and a directory named objects
 	public Index () {
 		
 	}
@@ -33,6 +37,11 @@ public class Index {
 		FileWriter fw = new FileWriter("index");
 		for (String name : list.keySet()) {
 			fw.write(name + " : " + list.get(name) + "\n");
+		}
+		deletedList.add("*deleted* "+fileName+"\n");
+		for (int i=0; i<deletedList.size();i++)
+		{
+			fw.write (deletedList.get(i));
 		}
 		fw.close();
 		
