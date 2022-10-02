@@ -6,11 +6,13 @@ import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;  
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date; 
 
 public class Commit {
@@ -73,12 +75,17 @@ public class Commit {
 		return pTree; 
 	}
 	
-	public String getDate() {
-		Date d = new Date();
-		SimpleDateFormat formatter = new SimpleDateFormat("dd MMMM yyyy"); 
-		date = formatter.format(d); 
+	
+	public String getDate()
+	{
+		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar cal = Calendar.getInstance();
+		String dt = dateFormat.format(cal.getTime());
+		return dt; // should I use the member variable here?
+	
+
 		
-		return date; 
+		
 	}
 	public Tree getTree()
 	{
@@ -128,7 +135,7 @@ public class Commit {
 		File f = new File("objects/" + hashedContents);
 		FileWriter fw = new FileWriter(f); 
 		
-		fw.write(tree + "\n" + parentPointer + "\n" + childPointer + "\n" + author + "\n" + date + "\n" + summary);
+		fw.write(tree.getSha() + "\n" + parentPointer + "\n" + childPointer + "\n" + author + "\n" + date + "\n" + summary);
 		fw.close();
 	}
 }
