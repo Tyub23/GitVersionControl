@@ -12,7 +12,7 @@ public class CommitTester {
 		Commit initial=new Commit ("First commit", "Jake Wiczyk", null);
 		initial.writesFile();
 		ind.add("placeholder.txt");
-		ind.add("snorgle.txt");
+		ind.add("test.txt");
 		Commit second=new Commit ("Second commit", "Jake Wiczyk", initial);
 		second.writesFile();
 
@@ -25,6 +25,7 @@ public class CommitTester {
 		ind.add("n.txt");
 		ind.add("last.txt");
 		Commit fourth=new Commit ("Fourth commit", "Jake Wiczyk", third);
+		fourth.delete("snorgle.txt");
 		fourth.writesFile();
 
 

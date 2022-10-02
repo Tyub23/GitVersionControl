@@ -1,5 +1,6 @@
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -20,6 +21,9 @@ public class Commit {
 	private String author; 
 	private String date; 
 	private String pTree; 
+	private File index;
+	private File head;
+	private ArrayList<String> list;
 	private Commit parent;
 	private Commit child; 
 	private Tree tree;
@@ -29,7 +33,21 @@ public class Commit {
 	
 		this.summary  = summary; 
 		this.author = author; 
-		ArrayList<String> list=new ArrayList<String>();
+		
+		
+		if (parent != null) {
+			this.parent = parent;
+			parent.setChild(this);
+		}
+		if (child != null) {
+			child.setParent(this);
+		}
+		date = getDate();	
+		
+	}
+	public void init() throws IOException, NoSuchAlgorithmException
+	{
+		list=new ArrayList<String>();
 		BufferedReader br=new BufferedReader(new FileReader("index"));
 		String name;
 		while (br.ready())
@@ -44,23 +62,14 @@ public class Commit {
 		if (parent!= null)
 		{
 			String pSha=parent.getTree().getSha();
+			pTree=pSha;
 			list.add("tree : "+pSha);
 		}
 		
 		tree=new Tree(list);
-		File index=new File("index");
+		index=new File("index");
 		index.delete();
 		index.createNewFile();
-		
-		if (parent != null) {
-			this.parent = parent;
-			parent.setChild(this);
-		}
-		if (child != null) {
-			child.setParent(this);
-		}
-		date = getDate();	
-		
 	}
 	
 	public void setParent(Commit p) {
@@ -86,6 +95,27 @@ public class Commit {
 
 		
 		
+	}
+	public boolean delete (String fileName) throws IOException
+	{
+		File file=new File (fileName);
+		if (!file.exists())
+			return false;
+		file.delete();
+		FileWriter fw=new FileWriter(index);
+		fw.write("*deleted* "+fileName+"\n");
+		fw.close();
+		return true;
+	}
+	public boolean edit (String fileName) throws IOException //assumes edit has been made externally
+	{
+		File file=new File (fileName);
+		if (!file.exists())
+			return false;
+		FileWriter fw=new FileWriter(index);
+		fw.write("*edited* "+fileName+"\n");
+		fw.close();
+		return true;
 	}
 	public Tree getTree()
 	{
@@ -121,7 +151,7 @@ public class Commit {
 		if (parent == null || parent.getpTree() == null) {
 			parentPointer = ""; 
 		} else {
-			parentPointer = parent.getpTree();
+			parentPointer = getpTree();
 		}
 		
 		if (child == null || child.getpTree() == null) {
