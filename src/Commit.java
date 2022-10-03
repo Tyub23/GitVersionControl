@@ -1,6 +1,5 @@
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class Commit {
 	private String date; 
 	private String pTree; 
 	private File index;
-	private File head;
+	private static File head;
 	private ArrayList<String> list;
 	private Commit parent;
 	private Commit child; 
@@ -33,20 +32,6 @@ public class Commit {
 	
 		this.summary  = summary; 
 		this.author = author; 
-		
-		
-		if (parent != null) {
-			this.parent = parent;
-			parent.setChild(this);
-		}
-		if (child != null) {
-			child.setParent(this);
-		}
-		date = getDate();	
-		
-	}
-	public void init() throws IOException, NoSuchAlgorithmException
-	{
 		list=new ArrayList<String>();
 		BufferedReader br=new BufferedReader(new FileReader("index"));
 		String name;
@@ -70,7 +55,21 @@ public class Commit {
 		index=new File("index");
 		index.delete();
 		index.createNewFile();
+		
+		if (parent != null) {
+			this.parent = parent;
+			parent.setChild(this);
+		}
+		if (child != null) {
+			child.setParent(this);
+		}
+		date = getDate();	
+		FileWriter headFW=new FileWriter(head, false);
+		
+		headFW.write(getTree().getSha());
+		headFW.close();
 	}
+	
 	
 	public void setParent(Commit p) {
 		parent = p; 
@@ -148,7 +147,7 @@ public class Commit {
 	public void writesFile() throws IOException {
 		String parentPointer; 
 		String childPointer;
-		if (parent == null || parent.getpTree() == null) {
+		if (parent == null || getpTree() == null) {
 			parentPointer = ""; 
 		} else {
 			parentPointer = getpTree();

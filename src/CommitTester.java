@@ -25,7 +25,7 @@ public class CommitTester {
 		ind.add("n.txt");
 		ind.add("last.txt");
 		Commit fourth=new Commit ("Fourth commit", "Jake Wiczyk", third);
-		fourth.delete("snorgle.txt");
+	//fourth.delete("snorgle.txt");
 		fourth.writesFile();
 
 
