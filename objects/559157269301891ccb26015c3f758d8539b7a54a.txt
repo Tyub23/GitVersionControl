@@ -1,3 +1,2 @@
-blob : orgle.txt *deleted
 blob : 999673fb71a6c710648d485ffea129a4192a6a9c snorgle.txt
 blob : da56bf2e70b180f3cc80786b8195a108794b79c2 slunch.txt

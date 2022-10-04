@@ -64,10 +64,10 @@ public class Commit {
 			child.setParent(this);
 		}
 		date = getDate();	
-		FileWriter headFW=new FileWriter(head, false);
+	//	FileWriter headFW=new FileWriter(head, false);
 		
-		headFW.write(getTree().getSha());
-		headFW.close();
+	//	headFW.write(getTree().getSha());
+	//	headFW.close();
 	}
 	
 	
