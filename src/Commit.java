@@ -21,7 +21,7 @@ public class Commit {
 	private String date; 
 	private String pTree; 
 	private File index;
-	private static File head;
+	private  File head;
 	private ArrayList<String> list;
 	private Commit parent;
 	private Commit child; 
@@ -63,11 +63,13 @@ public class Commit {
 		if (child != null) {
 			child.setParent(this);
 		}
-		date = getDate();	
-	//	FileWriter headFW=new FileWriter(head, false);
+		date = getDate();
+		head=new File("head");
+		head.createNewFile();
+		FileWriter headFW=new FileWriter(head, false);
 		
-	//	headFW.write(getTree().getSha());
-	//	headFW.close();
+		headFW.write(getTree().getSha());
+		headFW.close();
 	}
 	
 	
