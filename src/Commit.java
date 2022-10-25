@@ -32,6 +32,7 @@ public class Commit {
 	
 		this.summary  = summary; 
 		this.author = author; 
+		this.parent=parent;
 		list=new ArrayList<String>();
 		BufferedReader br=new BufferedReader(new FileReader("index"));
 		String name;
@@ -46,6 +47,7 @@ public class Commit {
 		br.close();
 		if (parent!= null)
 		{
+			parent.setChild(this);
 			String pSha=parent.getTree().getSha();
 			pTree=pSha;
 			list.add("tree : "+pSha);
@@ -155,13 +157,13 @@ public class Commit {
 			parentPointer = getpTree();
 		}
 		
-		if (child == null || child.getpTree() == null) {
+		if (child == null || child.getTree().getSha() == null) {
 			childPointer = ""; 
 		} else {
-			childPointer = child.getpTree();
+			childPointer = child.getTree().getSha();
 		}
 		
-		String hashedContents = hashify(summary + date + author + parentPointer); 
+		String hashedContents = hashify(summary + date + author + parentPointer+childPointer); 
 		//hashedContents = hashify(summary + date + author + parent.getpTree());
 		File f = new File("objects/" + hashedContents);
 		FileWriter fw = new FileWriter(f); 
